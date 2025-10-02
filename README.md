@@ -5,7 +5,7 @@
 
 ### Line 1
 
-- **Function**: 'hex_string = str(input("Enter a 2 hex values: \n"))'
+- **Function**: hex_string = str(input("Enter a 2 hex values: \n"))
   
 - **Purpose**: to prompt the user to input two hexadecimal values (e.g., 2a 33), which is set as strings. It would be stored as such: “2a 33” in the variable hex_string.
   
@@ -167,5 +167,4 @@
 
 > Lab 2 - IPv4 Parsing
 ## [hexdump60.py](https://github.com/Shilpa-Ramoo/work/blob/c372829ce7eed45bca7074c438849e15874ad6f4/hexdump60.py)
-
- * **Will upload soon** *
+**_Will upload soon_**
