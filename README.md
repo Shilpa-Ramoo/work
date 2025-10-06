@@ -1,7 +1,58 @@
 # Code Documentations For Lab 1 & Lab 2
-**Source**: [Python Software Foundation. (2025) Built in Functions](https://docs.python.org/3/library/functions.html)
-> Lab 1 - Endianness
-## [endian2.py](https://github.com/Shilpa-Ramoo/work/blob/c372829ce7eed45bca7074c438849e15874ad6f4/endian2.py)
+
+## Project Overview
+
+This repository contains Python programs developed for **Lab 1** and **Lab 2** as part of coursework on **Core Computer Science & Networking Fundamentals**.  
+These labs explore fundamental concepts of **endianness** and **IPv4 header parsing**.
+
+---
+
+## Lab Summaries
+
+### **Lab 1: Number Systems & Endianness**
+
+- **Objective:**  
+  Understand how hexadecimal values are interpreted in **Big Endian** and **Little Endian** formats.
+
+- **Concept:**  
+  Endianness determines the order of byte storage in memory.  
+  - **Big Endian:** Most Significant Byte (MSB) first  
+  - **Little Endian:** Least Significant Byte (LSB) first
+
+#### Scripts
+- [`endian2.py`](https://github.com/ShilpaRamoo/work/blob/main/source%20code/endian2.py) – 2-byte endianness conversion  
+- [`endian4.py`](https://github.com/ShilpaRamoo/work/blob/main/source%20code/endian4.py) – 4-byte endianness conversion
+
+---
+
+### **Lab 2: IPv4 Header Parsing**
+
+- **Objective:**  
+  Learn to interpret raw hexadecimal strings as structured network data (IPv4 headers).
+
+- **Concept:**  
+  IPv4 packets are sequences of bytes. Each field (e.g., version, IHL, protocol, IPs) can be extracted by parsing the corresponding byte positions.
+
+#### Script
+- [`hexdump60.py`](https://github.com/ShilpaRamoo/work/blob/main/source%20code/hexdump60.py)
+
+---
+
+## Requirements
+- **Python Version:** 3.13.7
+- **Libraries:** No external dependencies (uses only built-in Python functions)
+
+---
+
+## Acknowledgements
+[Python Software Foundation. (2025) Built in Functions](https://docs.python.org/3/library/functions.html)
+
+[Stackoverflow](https://stackoverflow.com/questions)
+
+
+---
+
+## [Lab work 1 - Endianness for two bytes](https://github.com/ShilpaRamoo/work/blob/db9c23d2fd105ab971f6c1f8577e0743eb93a79c/source%20code/endian2.py)
 
 ### Line 1
 
@@ -85,9 +136,9 @@
 - **Purpose**: both function a and b print the endianness Big and Little.
 
 
+---
 
-
-## [endian4.py](https://github.com/Shilpa-Ramoo/work/blob/c372829ce7eed45bca7074c438849e15874ad6f4/endian4.py)
+## [Lab work 1 - Endianness for four bytes](https://github.com/Shilpa-Ramoo/work/blob/db9c23d2fd105ab971f6c1f8577e0743eb93a79c/source%20code/endian4.py)
 
 ### Line 1 
 - **Function**: hex_string = str(input("Enter a 4 bytes hex values: \n"))
@@ -164,7 +215,126 @@
 - **Purpose**: Both function a and b use the f string to display the big and little endian values.
 
 
+---
 
-> Lab 2 - IPv4 Parsing
-## [hexdump60.py](https://github.com/Shilpa-Ramoo/work/blob/c372829ce7eed45bca7074c438849e15874ad6f4/hexdump60.py)
-**_Will upload soon_**
+## [Lab work 2 - IPv4 Parsing](https://github.com/Shilpa-Ramoo/work/blob/db9c23d2fd105ab971f6c1f8577e0743eb93a79c/source%20code/hexdump60.py)
+
+### Line 12
+- **Function**: hexdigits = "0123456789abcdef"
+- **Purpose**: A variable used to store valid hexdecimal values to be used for comparison
+
+
+### Line 15
+- **Function**: invalid_hex = []
+- **Purpose**: An empty list used to stored detected non-hex values
+
+
+### Line 19
+- **Function**: while True:
+- **Purpose**: A loop to prompt the user to enter the IPv4 header and if error detected, it will force the user to enter the value again.
+
+
+### Line 19
+- **Function**: while True:
+- **Purpose**: A loop to prompt the user to enter the IPv4 header and if error detected, it will force the user to enter the value again.
+
+
+### Line 22
+- **Function**: hex_dump = str(input(f"Enter the IPv4 Header Hex Dump: "))
+- **Purpose**: An input method to prompt the user to enter the IPv4 Header, stored as string in the variable hex_dump.
+
+
+### Line 24
+- **Function**: hex_arr = hex_dump.split()
+- **Purpose**: hex_arr is a variable that stores the value entered by the user in the format where each characters are separated by whitespace and stored individually in an array. The .split() method performs this task.
+- **Example**:
+test = "hello world"
+print(f"{test.split()}") **outputs: hello world**
+
+
+### Line 27
+- **Function**: string = "".join(hex_dump.split())
+- **Purpose**: string variable is used as temporary storage for storing hex_arr without whitespace. 
+- **Example**:
+test = "hello world"
+print(f"{test.join()}") **outputs: helloworld**
+
+### Line 29
+- **Function**: hex_val = list(string)
+- **Purpose**: turns string variable into a list with separated characters for hex validation 
+
+
+### Line 31
+- **Function**: byte_num = len(hex_arr)
+- **Purpose**: to check the length of user input values
+
+
+### Line 34 - 36
+- **Function**: if byte_num < 20 or byte_num > 60:
+        print("Please enter bytes between 20 and 60.")
+        continue
+- **Purpose**: checks if IPv4 header length matches the required bytes amount between 20 and 60
+
+
+### Line 39
+- **Function**: byte_num >= 20 or byte_num <= 60:
+- **Purpose**: a conditional statement that performs a task if byte amount entered is valid.
+
+
+### Line 41
+- **Function**: if all(c in hexdigits for c in hex_val) == True:
+- **Purpose**: checks all string characters in hexdigit to compare with hex_val characters in a for loop
+
+
+### Line 42 & Line 90 - 97
+- **Purpose**: A try... except is a statement used to handle errors during execution.
+
+
+### Line 47 - 82
+- **Purpose**: The sectioning of the user's provided IPv4 header to identify the parts of the header.
+- **Example**: version = int(hex_arr[0][0], 16)
+here the program is accessing the first value in the first array found in the hex_arr array and uses the int function to convert from hex to decimal, the second parameter - 16, is used to specify that the conversion is from hexadecimal.
+
+
+### Line 59 - 70
+- **Purpose**: A match statement sued to identify the type of protocol in the IPv4 header.
+- **Example**: Case 1 = ICMP, because ICMP is protocol 1.
+
+
+### Line 107 - 111
+- **Purpose**: It is a validation check to detect non-hexadecimal values using a for loop to loop through the values in hex_val. The if statement checks if the current character from the hex_val is in the hexdigits variable (which contains the valid hexadecimal values). After the check, the current character is stored in the invalid_hex variable to help the user identify the non-hexadecimal values.
+
+
+### Line 115 - 119
+- **Purpose**: An if statement used to check if the invalid hexadecimal values have been detected and if so, output the invalid value.
+
+
+### Line 125 - 130
+- **Purpose**: Prints the version, ihl, total length, protocol type, source & destination ip
+
+
+---
+
+
+## Example Input / Output
+
+### Example (Lab 1)
+```
+Input: 01 02
+Big Endian: 258
+Little Endian: 513
+```
+
+---
+
+### Example (Lab 2)
+```
+Input: 45 00 00 3c 1c 46 40 00 40 06 b1 e6 c0 a8 00 68 c0 a8 00 01
+
+Version: 4
+IHL: 5
+Total Length: 60
+Protocol: TCP
+Source IP: 192.168.0.104
+Destination IP: 192.168.0.1
+```
