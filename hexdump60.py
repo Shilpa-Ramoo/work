@@ -1,5 +1,7 @@
-import string
-#example hex dump 20 bytes: 45 00 00 3c 1c 46 40 00 40 06 b1 e6 c0 a8 00 68 c0 a8 00 01
+# This code is designed for IPv4 parsing, where non hex values are also detected. The user can enter between 20 to 60 bytes.
+
+#example hex dump: 45 00 00 3c 1c 46 40 00 40 06 b1 e6 c0 a8 00 68 c0 a8 00 01
+
 #Note:
 #byte 0 nibble 1 = version, byte 0 nibble 2 = ihl, byte 2-3 = total length, byte 9 = protocol, byte 12-15 = Source IP, byte 16 - 19 = Destination IP
 
@@ -9,14 +11,15 @@ import string
 #stores valid hex values
 hexdigits = "0123456789abcdef"
 
-#empty variable to store non-hex values for identifying non hex values
+#empty variable to store non-hex values for id
 invalid_hex = []
+
 
 #a loop that will force the user to enter the IPv4 Hex dump whose length must match the entered bytes number from ip_type
 while True:
-    #an input method that asks the user to enter the IPv4 Header
+    #an input method that asks the user to enter how many bytes are in the IPv4 Header since it can range between 20 to 60 bytes
+    #this makes the code more efficent and more flexible
     hex_dump = str(input(f"Enter the IPv4 Header Hex Dump: "))
-    
     #turns user input into an array of values separated by whitespace
     hex_arr = hex_dump.split()
 
@@ -29,7 +32,7 @@ while True:
     # to check the length of user input values
     byte_num = len(hex_arr)
 
-    #checks if IPv4 header length matches the required bytes amount
+    #checks if IPv4 header length matches the entered bytes amount
     if byte_num < 20 or byte_num > 60:
         print("Please enter bytes between 20 and 60.")
         continue
@@ -82,6 +85,10 @@ while True:
 
                 break
 
+
+
+            #Catch errors for debugging
+            #---------------------------------------------
             except ValueError as e:
                 error = e
                 print(f"An error occurred: {error}")
@@ -94,18 +101,28 @@ while True:
                 print(f"An error occurred: {error}")
                 print(f"Error type: {type(error)}")
                 continue
+            #---------------------------------------------
 
-            
-         # checks all string characters not in hexdigit to compare with hex_val characters in a for loop
-        elif all(c in hexdigits for c in hex_val) == False:
-            #variable invalid_hex is used to identify the non-hex values to inform user
-            invalid_hex = (all(c not in hexdigits for c in hex_val))
-            print(f"invalid hex values: {invalid_hex}")
-            print("Please enter a valid hexadecimal value.")
-            continue
+
+        #variable invalid_hex is used to identify the non-hex values to inform user
+        #a for loop to check all characters in hex_val to compare with characters in hexdigits
+        for char in hex_val:
+            #if the character is not found in hexdigits
+            if char not in hexdigits:
+                #add the character to invalid_hex
+                invalid_hex.append(char)
+                
+        
+        #a statement to check if invalid hex values have been found
+        if invalid_hex:
+            #the join method is used to add all the characters in invalid_hex together, separated by whitespace
+            print(f"invalid hex: {', '.join(invalid_hex)}")
+        else:
+            print("All characters are valid hex values.")
+    
         
 
-                                                                                                                                                                                                                                                                                  
+                                                                                                                                                                                                                                                                                                                                   
 #Prints the version, ihl, total length, protocol type, source & destination ip
 print(f"Version: {version}")
 print(f"IHL: {ihl}")
